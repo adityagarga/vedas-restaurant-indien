@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Vedas — Buffet Cards (Flat A6)</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap');
+  @page { size: A4 landscape; margin: 0; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; font-family: "Cormorant Garamond", Georgia, serif; }
+
+  .page {
+    width: 297mm; height: 210mm;
+    display: grid;
+    grid-template-columns: 148.5mm 148.5mm;
+    grid-template-rows: 105mm 105mm;
+    page-break-after: always;
+  }
+  .page:last-child { page-break-after: auto; }
+
+  .card {
+    width: 148.5mm; height: 105mm;
+    border: 0.2mm dotted #d3c3a7;           /* minimal cut guide */
+    padding: 9mm 14mm;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 8mm;
+    text-align: center;
+    background: #fffdf6;
+    overflow: hidden;
+  }
+
+  /* veg / non-veg symbol — inline SVG so it prints without "background graphics" */
+  .sym { width: 8mm; height: 8mm; display: inline-block; vertical-align: middle; }
+
+  .top { display:flex; flex-direction:column; align-items:center; gap:3mm; }
+  .veglabel { font-size: 8pt; letter-spacing: 2px; text-transform: uppercase; color:#8a7560; }
+
+  .name {
+    font-size: 30pt; font-weight: 600; color: #b1220c; line-height: 1.08;
+    text-transform: uppercase; letter-spacing: 3px; margin: 0;
+  }
+  .rule { width: 24mm; height: 0; border-top: 0.6mm solid #d6841f; margin: 5mm auto; }
+  .desc { font-size: 14pt; font-style: italic; color: #5c4a3a; line-height: 1.35; margin: 0; }
+  .desc.fr { font-size: 12.5pt; color: #9c6b3f; margin-top: 3mm; }
+
+  @media screen {
+    body { background:#e9e3d8; padding: 10px; }
+    .page { background:#fff; margin: 0 auto 16px; box-shadow: 0 4px 16px rgba(0,0,0,.15); }
+  }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+const ITEMS = [
+  { n:"Beetroot Kebab", t:"veg",
+    d:"Soft kebab made with beetroot, paneer, potatoes & fresh herbs",
+    f:"Kebab moelleux à la betterave, paneer, pommes de terre & herbes fraîches" },
+  { n:"Cocktail Samosa", t:"veg",
+    d:"Flaky-yet-tender pastry stuffed to the brim with spiced potatoes, peas & Indian condiments",
+    f:"Pâte feuilletée et fondante, garnie de pommes de terre épicées, petits pois & condiments indiens" },
+  { n:"Lilva Mattar Kachori", t:"veg",
+    d:"Crispy deep-fried Indian pastry stuffed with a spicy green-pea filling",
+    f:"Pâtisserie indienne croustillante frite, farcie aux petits pois verts épicés" },
+  { n:"Chicken Reshmi Kebab", t:"nv",
+    d:"Minced chicken with a melange of green vegetables, capsicum & aromatic spices",
+    f:"Poulet haché, mélange de légumes verts, poivron & épices aromatiques" },
+];
+
+const root = document.getElementById('root');
+function symSVG(t) {
+  const c = t === 'veg' ? '#1a7d2c' : '#9e1414';
+  const inner = t === 'veg'
+    ? `<circle cx="10" cy="10" r="4.6" fill="${c}"/>`
+    : `<polygon points="10,4.6 15.4,14.6 4.6,14.6" fill="${c}"/>`;
+  return `<svg class="sym" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">`
+    + `<rect x="1.4" y="1.4" width="17.2" height="17.2" fill="none" stroke="${c}" stroke-width="1.8"/>`
+    + inner + `</svg>`;
+}
+function card(it) {
+  const lbl = it.t === 'veg' ? 'Végétarien' : 'Non-Veg';
+  return `<div class="card">
+    <div class="top">
+      ${symSVG(it.t)}
+      <span class="veglabel">${lbl}</span>
+    </div>
+    <div>
+      <h2 class="name">${it.n}</h2>
+      <div class="rule"></div>
+      <p class="desc">${it.d}</p>
+      <p class="desc fr">${it.f}</p>
+    </div>
+  </div>`;
+}
+
+for (let i = 0; i < ITEMS.length; i += 4) {
+  const page = document.createElement('div');
+  page.className = 'page';
+  page.innerHTML = ITEMS.slice(i, i + 4).map(card).join('');
+  root.appendChild(page);
+}
+</script>
+</body>
+</html>
