@@ -153,12 +153,9 @@ SECTIONS.forEach(s => {
 el.appendChild(catEl("Lassi · Dessert"));
 DESSERTS.forEach(it => el.appendChild(rowEl(it)));
 
-// Boissons - Bière (compact inline like the poster)
+// Boissons - Bière (vertical rows, like the other sections)
 el.appendChild(catEl("Boissons · Bière"));
-const inl = document.createElement('div');
-inl.className = 'inline';
-inl.innerHTML = DRINKS.map(d => `${d.n} <b>${fmt(d.p)}&nbsp;€</b>`).join('<span class="sep">|</span>');
-el.appendChild(inl);
+DRINKS.forEach(it => el.appendChild(rowEl(it)));
 </script>
 </body>
 </html>

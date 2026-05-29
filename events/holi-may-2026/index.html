@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#b23a00">
+<title>Vedas — Caisse</title>
+<style>
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body {
+    margin: 0; padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: #fff5ec; color: #2a1a10;
+    overscroll-behavior: none;
+  }
+  body { padding-bottom: 200px; }
+
+  header {
+    background: #b23a00; color: #fff;
+    padding: 14px 16px; position: sticky; top: 0; z-index: 10;
+    display: flex; align-items: center; justify-content: space-between;
+    box-shadow: 0 2px 8px rgba(0,0,0,.2);
+  }
+  header h1 { font-size: 20px; margin: 0; font-weight: 700; letter-spacing: .5px; }
+  header .count { font-size: 14px; opacity: .9; }
+
+  .cat {
+    font-size: 13px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 1px; color: #b23a00;
+    padding: 16px 16px 6px; opacity: .8;
+  }
+
+  .grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+    padding: 0 12px;
+  }
+  .item {
+    background: #fff; border: 2px solid #f0d8c4; border-radius: 14px;
+    padding: 14px 12px; text-align: left; cursor: pointer;
+    display: flex; flex-direction: column; justify-content: space-between;
+    min-height: 78px; transition: transform .05s, background .1s;
+    position: relative;
+  }
+  .item:active { transform: scale(.96); background: #ffe9d6; }
+  .item .name { font-size: 15px; font-weight: 600; line-height: 1.2; }
+  .item .price { font-size: 15px; font-weight: 800; color: #b23a00; margin-top: 8px; }
+  .item .badge {
+    position: absolute; top: -8px; right: -8px;
+    background: #1a8f3c; color: #fff; min-width: 26px; height: 26px;
+    border-radius: 14px; font-size: 14px; font-weight: 800;
+    display: flex; align-items: center; justify-content: center; padding: 0 6px;
+    box-shadow: 0 2px 4px rgba(0,0,0,.25);
+  }
+
+  /* Cart drawer */
+  .cart {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    background: #fff; border-top: 3px solid #b23a00;
+    border-radius: 18px 18px 0 0;
+    box-shadow: 0 -4px 16px rgba(0,0,0,.18);
+    max-height: 70vh; display: flex; flex-direction: column;
+    padding-bottom: env(safe-area-inset-bottom);
+    transform: translateY(calc(100% - 130px - env(safe-area-inset-bottom)));
+    transition: transform .25s ease;
+  }
+  .cart.open { transform: translateY(0); }
+
+  .cart-handle {
+    padding: 12px 16px; display: flex; align-items: center; justify-content: space-between;
+    cursor: pointer;
+  }
+  .cart-handle .label { font-size: 14px; color: #888; font-weight: 600; }
+  .cart-handle .total { font-size: 30px; font-weight: 900; color: #b23a00; }
+
+  .cart-list { overflow-y: auto; padding: 0 12px; flex: 1; }
+  .line {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 4px; border-bottom: 1px solid #f0e0d4;
+  }
+  .line .lname { flex: 1; font-size: 15px; font-weight: 600; }
+  .line .lprice { font-size: 14px; color: #777; width: 58px; text-align: right; }
+  .qbtn {
+    width: 40px; height: 40px; border-radius: 50%; border: none;
+    font-size: 22px; font-weight: 800; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .qminus { background: #f0d8c4; color: #b23a00; }
+  .qplus { background: #b23a00; color: #fff; }
+  .qty { width: 28px; text-align: center; font-size: 18px; font-weight: 800; }
+
+  .cart-footer { padding: 12px; display: flex; gap: 10px; }
+  .btn {
+    flex: 1; padding: 16px; border: none; border-radius: 14px;
+    font-size: 17px; font-weight: 800; cursor: pointer;
+  }
+  .btn-clear { background: #eee; color: #555; }
+  .btn-clear:active { background: #ddd; }
+  .grand { background: #b23a00; color: #fff; }
+
+  .empty { text-align: center; color: #aaa; padding: 24px; font-size: 15px; }
+
+  .subtotals { display:flex; gap:20px; padding: 6px 16px 12px; font-size:20px; color:#777; font-weight:600; white-space:nowrap; flex-wrap:wrap; }
+  .subtotals b { color:#b23a00; font-size:26px; font-weight:900; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🪔 Vedas — Caisse</h1>
+  <span class="count" id="hdrCount"></span>
+</header>
+
+<div id="menu"></div>
+
+<div class="cart" id="cart">
+  <div class="cart-handle" id="cartHandle">
+    <span class="label" id="cartLabel">Appuyer pour voir la commande ▲</span>
+    <span class="total" id="totalTop">0€</span>
+  </div>
+  <div class="subtotals" id="subtotals"></div>
+  <div class="cart-list" id="cartList"></div>
+  <div class="cart-footer">
+    <button class="btn btn-clear" id="clearBtn">Nouvelle commande</button>
+  </div>
+</div>
+
+<script>
+const MENU = {
+  "Plats": [
+    { n: "1. Wrap Chicken Tikka", p: 9 },
+    { n: "3. Biryani au Poulet", p: 15 },
+    { n: "4. Daal Makhani + Riz", p: 15 },
+    { n: "5. Poulet Tikka Masala + Riz", p: 15 },
+    { n: "6. Agneau Rogan Josh + Riz", p: 15 },
+    { n: "7. Poulet Curry + Agneau Curry + Riz", p: 17 },
+    { n: "8. Naan au Fromage", p: 4 },
+    { n: "9. Samosas Légumes x2", p: 5 },
+    { n: "10. Samosa Chaat", p: 8 },
+  ],
+  "Boissons & Desserts": [
+    { n: "Lassi Mango Alfonso", p: 5 },
+    { n: "Gâteau Indien", p: 4 },
+    { n: "Jus de Fruits Frais", p: 6 },
+    { n: "Fruits Frais", p: 6 },
+    { n: "Café", p: 2 },
+    { n: "Chai", p: 3 },
+    { n: "Eau / Soda", p: 2.5 },
+    { n: "Bière Blonde Indienne", p: 5 },
+  ]
+};
+
+// cart = { "itemKey": { n, p, q, cat } }
+let cart = {};
+
+const menuEl = document.getElementById('menu');
+
+function keyOf(cat, i) { return cat + "::" + i; }
+
+function buildMenu() {
+  for (const cat in MENU) {
+    const h = document.createElement('div');
+    h.className = 'cat'; h.textContent = cat;
+    menuEl.appendChild(h);
+    const grid = document.createElement('div');
+    grid.className = 'grid';
+    MENU[cat].forEach((item, i) => {
+      const k = keyOf(cat, i);
+      const el = document.createElement('div');
+      el.className = 'item';
+      el.dataset.key = k;
+      el.innerHTML = `<span class="name">${item.n}</span>
+        <span class="price">${item.p}€</span>
+        <span class="badge" style="display:none">0</span>`;
+      el.addEventListener('click', () => add(cat, i));
+      grid.appendChild(el);
+    });
+    menuEl.appendChild(grid);
+  }
+}
+
+function add(cat, i) {
+  const k = keyOf(cat, i);
+  const item = MENU[cat][i];
+  if (!cart[k]) cart[k] = { n: item.n, p: item.p, q: 0, cat };
+  cart[k].q++;
+  render();
+}
+function dec(k) {
+  if (!cart[k]) return;
+  cart[k].q--;
+  if (cart[k].q <= 0) delete cart[k];
+  render();
+}
+function inc(k) { cart[k].q++; render(); }
+
+function render() {
+  let total = 0, count = 0;
+  const subs = {};
+  for (const k in cart) {
+    const c = cart[k];
+    total += c.p * c.q; count += c.q;
+    subs[c.cat] = (subs[c.cat] || 0) + c.p * c.q;
+  }
+
+  // badges on menu
+  document.querySelectorAll('.item').forEach(el => {
+    const k = el.dataset.key;
+    const b = el.querySelector('.badge');
+    if (cart[k]) { b.style.display = 'flex'; b.textContent = cart[k].q; }
+    else b.style.display = 'none';
+  });
+
+  document.getElementById('totalTop').textContent = total + '€';
+  document.getElementById('hdrCount').textContent = count ? count + ' article' + (count>1?'s':'') : '';
+
+  // subtotals
+  const subEl = document.getElementById('subtotals');
+  if (count) {
+    subEl.innerHTML = Object.keys(subs).map(c =>
+      `<span>${c.split(' ')[0]}: <b>${subs[c]}€</b></span>`).join('');
+  } else subEl.innerHTML = '';
+
+  // cart list
+  const list = document.getElementById('cartList');
+  if (!count) {
+    list.innerHTML = '<div class="empty">Aucun article. Appuyez sur un plat.</div>';
+    document.getElementById('cartLabel').textContent = 'Appuyer pour voir la commande ▲';
+  } else {
+    list.innerHTML = '';
+    for (const k in cart) {
+      const c = cart[k];
+      const row = document.createElement('div');
+      row.className = 'line';
+      row.innerHTML = `
+        <button class="qbtn qminus">−</button>
+        <span class="qty">${c.q}</span>
+        <button class="qbtn qplus">+</button>
+        <span class="lname">${c.n}</span>
+        <span class="lprice">${c.p * c.q}€</span>`;
+      row.querySelector('.qminus').addEventListener('click', e => { e.stopPropagation(); dec(k); });
+      row.querySelector('.qplus').addEventListener('click', e => { e.stopPropagation(); inc(k); });
+      list.appendChild(row);
+    }
+    document.getElementById('cartLabel').textContent = count + ' article' + (count>1?'s':'') + ' — Total';
+  }
+}
+
+// cart drawer toggle
+const cartEl = document.getElementById('cart');
+document.getElementById('cartHandle').addEventListener('click', () => {
+  cartEl.classList.toggle('open');
+});
+
+document.getElementById('clearBtn').addEventListener('click', (e) => {
+  e.stopPropagation();
+  if (Object.keys(cart).length && !confirm('Effacer la commande et recommencer ?')) return;
+  cart = {};
+  cartEl.classList.remove('open');
+  render();
+});
+
+buildMenu();
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vedas Food Truck — Menu (poster)</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root{ --red:#b81d0a; --red2:#c4200d; --ink:#231509; --muted:#7a6253; --cream:#fbf4ea; --line:#ead9c7; --gold:#c9a25a; --green:#1a8f3c; }
+  html,body{ background:#fff; }
+  .poster{
+    width:1000px; background:var(--cream); font-family:"Jost",sans-serif; color:var(--ink);
+    overflow:hidden;
+  }
+  /* banner */
+  .banner{ position:relative; height:360px; overflow:hidden; }
+  .banner img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .banner .scrim{ position:absolute; inset:0; background:linear-gradient(180deg,rgba(35,20,10,.30),rgba(35,20,10,.74)); }
+  .banner .txt{ position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; color:#fff; text-align:center; }
+  .banner .eyebrow{ font-weight:600; letter-spacing:.4em; text-transform:uppercase; font-size:15px; color:#f1c98f; }
+  .banner h1{ font-family:"Cormorant Garamond",serif; font-weight:700; font-size:108px; letter-spacing:.14em; text-indent:.14em; line-height:1; text-shadow:0 4px 24px rgba(0,0,0,.45); margin:4px 0; }
+  .banner h2{ font-weight:600; letter-spacing:.34em; text-indent:.34em; text-transform:uppercase; font-size:22px; }
+
+  .body{ padding:46px 64px 28px; }
+  .cat{ background:var(--red2); color:#fff; font-weight:700; letter-spacing:.06em; text-transform:uppercase;
+        font-size:26px; padding:12px 20px; border-radius:12px; margin:30px 0 6px; }
+  .cat:first-child{ margin-top:0; }
+  .row{ display:flex; align-items:baseline; gap:12px; padding:15px 6px; border-bottom:2px solid var(--line); }
+  .num{ font-weight:700; color:var(--red); min-width:40px; font-size:24px; }
+  .name{ font-size:25px; font-weight:500; }
+  .veg{ display:inline-block; background:var(--green); color:#fff; font-weight:700; font-size:14px; padding:3px 7px; border-radius:6px; margin-left:8px; vertical-align:middle; }
+  .dots{ flex:1; }
+  .price{ font-size:27px; font-weight:700; color:var(--red); white-space:nowrap; }
+  .drinks{ padding:16px 6px; font-size:24px; font-weight:500; line-height:1.9; border-bottom:2px solid var(--line); }
+  .drinks b{ font-weight:700; color:var(--red); }
+  .drinks .sep{ color:#d8b3a4; margin:0 10px; }
+
+  .footer{ background:#231509; color:#f0ddca; padding:28px 64px; display:flex; align-items:center; justify-content:space-between; gap:26px; }
+  .footer .qr{ background:#fff; padding:10px; border-radius:12px; width:132px; height:132px; flex:0 0 auto; }
+  .footer .qr img{ width:100%; height:100%; display:block; }
+  .footer .ftxt{ text-align:left; }
+  .footer .scan{ font-family:"Cormorant Garamond",serif; font-size:30px; font-weight:700; color:#f1c98f; }
+  .footer .site{ font-size:21px; font-weight:600; margin-top:4px; }
+  .footer .pay{ font-size:16px; color:#cdb6a6; margin-top:10px; }
+</style>
+</head>
+<body>
+  <div class="poster">
+    <div class="banner">
+      <img src="truck.jpg" alt="">
+      <div class="scrim"></div>
+      <div class="txt">
+        <div class="eyebrow">Holi · Food Truck</div>
+        <h1>VEDAS</h1>
+        <h2>Food Truck Indien</h2>
+      </div>
+    </div>
+
+    <div class="body">
+      <div class="cat">Wrap</div>
+      <div class="row"><span class="num">1.</span><span class="name">Wrap Chicken Tikka</span><span class="dots"></span><span class="price">9&nbsp;€</span></div>
+
+      <div class="cat">Curry Bowls avec Riz</div>
+      <div class="row"><span class="num">3.</span><span class="name">Biryani au Poulet</span><span class="dots"></span><span class="price">15&nbsp;€</span></div>
+      <div class="row"><span class="num">4.</span><span class="name">Daal Makhani (Lentilles Noires) + Riz<span class="veg">VEG</span></span><span class="dots"></span><span class="price">15&nbsp;€</span></div>
+      <div class="row"><span class="num">5.</span><span class="name">Poulet Tikka Masala + Riz</span><span class="dots"></span><span class="price">15&nbsp;€</span></div>
+      <div class="row"><span class="num">6.</span><span class="name">Agneau Rogan Josh + Riz</span><span class="dots"></span><span class="price">15&nbsp;€</span></div>
+      <div class="row"><span class="num">7.</span><span class="name">Poulet Curry + Agneau Curry + Riz</span><span class="dots"></span><span class="price">17&nbsp;€</span></div>
+
+      <div class="cat">Snacks</div>
+      <div class="row"><span class="num">8.</span><span class="name">Naan au Fromage<span class="veg">VEG</span></span><span class="dots"></span><span class="price">4&nbsp;€</span></div>
+      <div class="row"><span class="num">9.</span><span class="name">Samosas aux Légumes x2<span class="veg">VEG</span></span><span class="dots"></span><span class="price">5&nbsp;€</span></div>
+      <div class="row"><span class="num">10.</span><span class="name">Samosa Chaat<span class="veg">VEG</span></span><span class="dots"></span><span class="price">8&nbsp;€</span></div>
+
+      <div class="cat">Lassi · Dessert</div>
+      <div class="row"><span class="name">Lassi Mango Alfonso</span><span class="dots"></span><span class="price">5&nbsp;€</span></div>
+      <div class="row"><span class="name">Gâteau Indien</span><span class="dots"></span><span class="price">4&nbsp;€</span></div>
+      <div class="row"><span class="name">Jus de Fruits Frais</span><span class="dots"></span><span class="price">6&nbsp;€</span></div>
+      <div class="row"><span class="name">Fruits Frais</span><span class="dots"></span><span class="price">6&nbsp;€</span></div>
+
+      <div class="cat">Boissons · Bière</div>
+      <div class="drinks">Café <b>2&nbsp;€</b><span class="sep">|</span>Chai <b>3&nbsp;€</b><span class="sep">|</span>Eau / Soda <b>2,50&nbsp;€</b><span class="sep">|</span>Bière Blonde Indienne <b>5&nbsp;€</b></div>
+    </div>
+
+    <div class="footer">
+      <div class="qr"><img src="menu-qr.svg" alt="QR menu"></div>
+      <div class="ftxt">
+        <div class="scan">📲 Scannez pour le menu en ligne</div>
+        <div class="site">www.vedas-restaurant.com/food-truck</div>
+        <div class="pay">Paiement : CB · Ticket Restaurant · espèces</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

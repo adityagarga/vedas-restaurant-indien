@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Holi background (text-free)</title>
+<style>
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  html,body{ background:#000; }
+  .bg{
+    width:1000px; height:450px; position:relative; overflow:hidden;
+    background:
+      linear-gradient(120deg, #b81d0a 0%, #c4200d 38%, #d8390f 70%, #e85a1a 100%);
+  }
+  .blob{ position:absolute; border-radius:50%; }
+  /* large soft powder clouds */
+  .b1{ width:520px;height:520px; top:-160px; left:-120px; background:radial-gradient(circle,#ff2d8a 0%,rgba(255,45,138,0) 68%); }
+  .b2{ width:560px;height:560px; top:-120px; right:-140px; background:radial-gradient(circle,#ffcf3a 0%,rgba(255,207,58,0) 66%); }
+  .b3{ width:480px;height:480px; bottom:-200px; left:8%; background:radial-gradient(circle,#16c2ff 0%,rgba(22,194,255,0) 66%); }
+  .b4{ width:520px;height:520px; bottom:-220px; right:6%; background:radial-gradient(circle,#7be028 0%,rgba(123,224,40,0) 66%); }
+  .b5{ width:420px;height:420px; top:30%; left:34%; background:radial-gradient(circle,#a64dff 0%,rgba(166,77,255,0) 62%); }
+  .b6{ width:360px;height:360px; top:-80px; left:40%; background:radial-gradient(circle,#ff7a00 0%,rgba(255,122,0,0) 64%); }
+  .b7{ width:300px;height:300px; bottom:-80px; left:46%; background:radial-gradient(circle,#ffffff 0%,rgba(255,255,255,0) 60%); opacity:.5; }
+  /* crisp powder specks */
+  .dot{ position:absolute; border-radius:50%; filter:blur(.5px); }
+  .p1{ width:46px;height:46px; top:60px; left:160px; background:#ffd23f; }
+  .p2{ width:30px;height:30px; top:300px; left:110px; background:#39d2ff; }
+  .p3{ width:38px;height:38px; top:90px; right:220px; background:#ff4fa3; }
+  .p4{ width:26px;height:26px; bottom:60px; right:180px; background:#7be028; }
+  .p5{ width:20px;height:20px; top:200px; left:70px; background:#ffffff; }
+  .p6{ width:24px;height:24px; bottom:90px; left:250px; background:#a857ff; }
+  .p7{ width:18px;height:18px; top:130px; right:120px; background:#fff; }
+  /* readability vignette for overlaid white title/description */
+  .vignette{ position:absolute; inset:0;
+    background:radial-gradient(ellipse 70% 80% at 50% 50%, rgba(60,8,4,.42) 0%, rgba(60,8,4,.10) 55%, rgba(60,8,4,.34) 100%); }
+</style>
+</head>
+<body>
+  <div class="bg">
+    <span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span>
+    <span class="blob b4"></span><span class="blob b5"></span><span class="blob b6"></span><span class="blob b7"></span>
+    <span class="dot p1"></span><span class="dot p2"></span><span class="dot p3"></span>
+    <span class="dot p4"></span><span class="dot p5"></span><span class="dot p6"></span><span class="dot p7"></span>
+    <div class="vignette"></div>
+  </div>
+</body>
+</html>
