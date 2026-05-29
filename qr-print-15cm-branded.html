@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>QR — 15cm Vedas (A4)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  @page { size: A4; margin: 0; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: #fff; }
+  .sheet {
+    width: 210mm; height: 297mm; margin: 0 auto;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+  }
+
+  .brand {
+    font-family: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+    color: #9c463a;
+    font-size: 78px; font-weight: 500;
+    letter-spacing: 0.42em;
+    /* nudge: letter-spacing pushes text right, recenter */
+    text-indent: 0.42em;
+    line-height: 1;
+    margin: 0;
+  }
+  .tagline {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    color: #9c463a;
+    font-size: 19px; font-weight: 500;
+    letter-spacing: 0.55em; text-indent: 0.55em;
+    text-transform: uppercase;
+    margin: 6mm 0 0;
+  }
+
+  .qr {
+    width: 150mm; height: 150mm;
+    display: block; margin: 14mm 0 0;
+    image-rendering: pixelated;
+  }
+
+  .scan {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    color: #9c463a;
+    font-size: 26px; font-weight: 600;
+    letter-spacing: 0.18em; text-indent: 0.18em;
+    margin: 12mm 0 0;
+  }
+
+  .printbtn {
+    position: fixed; top: 12px; right: 12px;
+    background: #9c463a; color: #fff; border: none;
+    padding: 12px 22px; border-radius: 10px;
+    font-size: 15px; font-weight: 700; cursor: pointer;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+  @media print { .printbtn { display: none; } }
+</style>
+</head>
+<body>
+  <button class="printbtn" onclick="window.print()">🖨️ Imprimer</button>
+  <div class="sheet">
+    <h1 class="brand">VEDAS</h1>
+    <div class="tagline">Restaurant Indien</div>
+    <img class="qr" src="menu-qr.svg" alt="QR menu Vedas">
+    <div class="scan">Scannez pour voir le menu</div>
+  </div>
+</body>
+</html>

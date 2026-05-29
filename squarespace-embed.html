@@ -1,0 +1,135 @@
+<!-- ============================================================= -->
+<!-- VEDAS food-truck menu — paste this ENTIRE block into a        -->
+<!-- Squarespace Code Block on the /food-truck page.               -->
+<!-- All styles are scoped to .vedas-fp so they won't touch the    -->
+<!-- rest of your Squarespace site.                                -->
+<!-- ============================================================= -->
+<style>
+  .vedas-fp * { box-sizing: border-box; }
+  .vedas-fp {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+    background: #ffffff;            /* solid white — readable in sunlight */
+    color: #1a1208;
+    padding: 10px 0 30px;
+    -webkit-text-size-adjust: 100%;
+    max-width: 620px; margin: 0 auto;
+  }
+  .vedas-fp header { text-align: center; padding: 26px 10px 8px; }
+  .vedas-fp h1 {
+    font-size: clamp(44px, 13vw, 64px); margin: 0; font-weight: 900;
+    letter-spacing: 1px; line-height: .92; color: #b81d0a;
+  }
+  .vedas-fp h2 {
+    font-size: clamp(18px, 5.5vw, 26px); margin: 4px 0 0; font-weight: 800;
+    letter-spacing: 1.5px; color: #1a1208; text-transform: uppercase;
+  }
+  .vedas-fp .cat {
+    margin: 24px 0 0; font-size: clamp(20px, 5.6vw, 26px); font-weight: 900;
+    letter-spacing: 1px; text-transform: uppercase;
+    background: #c4200d; color: #fff;
+    padding: 9px 14px; border-radius: 10px;
+  }
+  .vedas-fp .row {
+    display: flex; align-items: baseline; gap: 8px;
+    padding: 13px 4px; border-bottom: 2px solid #f0d9cf;
+  }
+  .vedas-fp .row .num { font-weight: 900; color: #b81d0a; min-width: 30px; font-size: clamp(17px,4.6vw,20px); }
+  .vedas-fp .row .name { font-size: clamp(18px, 4.8vw, 21px); font-weight: 700; color: #1a1208; }
+  .vedas-fp .row .veg {
+    display: inline-block; color: #fff; background: #1a8f3c; font-weight: 900;
+    font-size: 12px; line-height: 1; padding: 3px 5px; border-radius: 5px; margin-left: 6px;
+    vertical-align: middle;
+  }
+  .vedas-fp .row .dots { flex: 1; }
+  .vedas-fp .row .price { font-size: clamp(19px, 5.2vw, 23px); font-weight: 900; white-space: nowrap; color: #b81d0a; }
+  .vedas-fp .inline {
+    padding: 14px 4px; font-size: clamp(17px, 4.6vw, 20px); font-weight: 700; line-height: 1.8;
+    border-bottom: 2px solid #f0d9cf; color: #1a1208;
+  }
+  .vedas-fp .inline b { font-weight: 900; color: #b81d0a; }
+  .vedas-fp .inline .sep { color: #d8b3a4; margin: 0 7px; }
+  .vedas-fp footer {
+    text-align: center; margin-top: 28px; padding-top: 16px;
+    border-top: 2px solid #f0d9cf;
+    font-size: 14px; line-height: 1.6; color: #4a3325;
+  }
+  .vedas-fp footer .site { font-weight: 900; color: #b81d0a; }
+  .vedas-fp footer .site a { color: #b81d0a; text-decoration: underline; }
+  .vedas-fp footer .small { font-size: 12.5px; }
+</style>
+
+<div class="vedas-fp">
+  <header>
+    <h1>VEDAS</h1>
+    <h2>Food Truck Indien</h2>
+  </header>
+
+  <div id="vedas-fp-items"></div>
+
+  <footer>
+    <div class="site"><a href="https://www.vedas-restaurant.com" target="_blank" rel="noopener">www.vedas-restaurant.com</a> &nbsp;|&nbsp; @vedasrestaurantindien</div>
+    <div class="small">Contactez-nous pour privatiser le food truck chez vous · 🪔 Happy Holi</div>
+  </footer>
+</div>
+
+<script>
+(function () {
+  // Item numbers match the physical poster. #2 was removed -> the number is skipped.
+  var SECTIONS = [
+    { title: "Wrap", items: [
+      { num: 1, n: "Wrap Chicken Tikka", p: 9 },
+    ]},
+    { title: "Curry Bowls avec Riz", items: [
+      { num: 3, n: "Biryani au Poulet", p: 15 },
+      { num: 4, n: "Daal Makhani (Lentilles Noires) + Riz", p: 15, veg: true },
+      { num: 5, n: "Poulet Tikka Masala + Riz", p: 15 },
+      { num: 6, n: "Agneau Rogan Josh + Riz", p: 15 },
+      { num: 7, n: "Poulet Curry + Agneau Curry + Riz", p: 17 },
+    ]},
+    { title: "Snacks", items: [
+      { num: 8, n: "Naan au Fromage", p: 4, veg: true },
+      { num: 9, n: "Samosas aux Légumes x2", p: 5, veg: true },
+      { num: 10, n: "Samosa Chaat", p: 8, veg: true },
+    ]},
+  ];
+  var DESSERTS = [
+    { n: "Lassi Mango Alfonso", p: 5 },
+    { n: "Gâteau Indien", p: 4 },
+    { n: "Jus de Fruits Frais", p: 6 },
+    { n: "Fruits Frais", p: 6 },
+  ];
+  var DRINKS = [
+    { n: "Café", p: 2 },
+    { n: "Chai", p: 3 },
+    { n: "Eau / Soda", p: 2.5 },
+    { n: "Bière Blonde Indienne", p: 5 },
+  ];
+
+  function fmt(p) { return Number.isInteger(p) ? p : p.toFixed(2).replace('.', ','); }
+  var el = document.getElementById('vedas-fp-items');
+  if (!el) return;
+
+  function catEl(t) { var d = document.createElement('div'); d.className = 'cat'; d.textContent = t; return d; }
+  function rowEl(it) {
+    var r = document.createElement('div'); r.className = 'row';
+    r.innerHTML = (it.num ? '<span class="num">' + it.num + '.</span>' : '')
+      + '<span class="name">' + it.n + (it.veg ? '<span class="veg">VEG</span>' : '') + '</span>'
+      + '<span class="dots"></span><span class="price">' + fmt(it.p) + '&nbsp;€</span>';
+    return r;
+  }
+
+  SECTIONS.forEach(function (s) {
+    el.appendChild(catEl(s.title));
+    s.items.forEach(function (it) { el.appendChild(rowEl(it)); });
+  });
+
+  el.appendChild(catEl("Lassi · Dessert"));
+  DESSERTS.forEach(function (it) { el.appendChild(rowEl(it)); });
+
+  el.appendChild(catEl("Boissons · Bière"));
+  var inl = document.createElement('div');
+  inl.className = 'inline';
+  inl.innerHTML = DRINKS.map(function (d) { return d.n + ' <b>' + fmt(d.p) + '&nbsp;€</b>'; }).join('<span class="sep">|</span>');
+  el.appendChild(inl);
+})();
+</script>

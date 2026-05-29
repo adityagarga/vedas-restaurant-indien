@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>QR — 15cm (A4)</title>
+<style>
+  @page { size: A4; margin: 0; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: #fff; }
+  .sheet {
+    width: 210mm; height: 297mm; margin: 0 auto;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .qr {
+    width: 150mm; height: 150mm;
+    display: block; image-rendering: pixelated;
+  }
+  .printbtn {
+    position: fixed; top: 12px; right: 12px;
+    background: #000; color: #fff; border: none;
+    padding: 12px 22px; border-radius: 10px;
+    font-size: 15px; font-weight: 700; cursor: pointer;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+  @media print { .printbtn { display: none; } }
+</style>
+</head>
+<body>
+  <button class="printbtn" onclick="window.print()">🖨️ Imprimer</button>
+  <div class="sheet">
+    <img class="qr" src="menu-qr.svg" alt="QR menu Vedas">
+  </div>
+</body>
+</html>
