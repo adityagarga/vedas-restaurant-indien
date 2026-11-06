@@ -26,26 +26,32 @@
   .card {
     width: 105mm; height: 148.5mm;
     position: relative;
-    background: #fffdf6;
+    background: #fff;
     overflow: hidden;
   }
 
+  /* Each half = one landscape face (105 x 74.25 mm), wedding floral style */
   .half {
-    height: 50%; padding: 7mm 8mm;
+    height: 50%; position: relative; overflow: hidden;
+    padding: 6mm 12mm;
     display: flex; flex-direction: column; align-items: center; justify-content: center;
-    text-align: center; gap: 2mm;
+    text-align: center;
   }
   .half.top { transform: rotate(180deg); }   /* so it reads upright from the back of the tent */
+  /* top edge of each face is the fold; flowers bleed into it */
 
-  /* veg / non-veg symbol — inline SVG so it prints without "background graphics" */
-  .sym { width: 7mm; height: 7mm; display: inline-block; vertical-align: middle; }
-  .symlabel { font-size: 9pt; text-transform: uppercase; letter-spacing: 3px;
-              color:#8a8258; margin: 1.5mm 0 0; }
+  .fl { position: absolute; pointer-events: none; }
+  .fl.tl { top: 0; left: 0; width: 43mm; }
+  .fl.br { bottom: 0; right: 0; width: 27mm; transform: rotate(180deg); }
 
-  .name { font-size: 22pt; font-weight: 600; color:#b1220c; line-height: 1.05;
-          text-transform: uppercase; letter-spacing: 2.5px; margin: 6mm 0 0; }
-  .rule { width: 18mm; border-top: 0.5mm solid #d6841f; margin: 2mm 0; }
-  .desc { font-size: 13pt; font-style: italic; color:#5c4a3a; line-height: 1.28; margin: 0; }
+  .name { font-size: 15pt; font-weight: 600; color: #7a6233; line-height: 1.12;
+          text-transform: uppercase; letter-spacing: 0.12em; margin: 0; }
+  .rule { width: 9mm; border-top: 0.3mm solid #2e2e2e; margin: 3.2mm 0 3mm; }
+  .desc { font-size: 11.5pt; font-weight: 500; color: #3f3f3f; line-height: 1.3; margin: 0;
+          max-width: 76mm; }
+  .veg { display: flex; align-items: center; justify-content: center; gap: 1.8mm; margin-top: 3.4mm; }
+  .sym { width: 3.2mm; height: 3.2mm; display: block; }
+  .symlabel { font-size: 7pt; text-transform: uppercase; letter-spacing: 0.22em; color: #4f4f4f; margin: 0; }
 
   @media screen {
     body { background:#e9e3d8; padding: 10px; }
@@ -76,12 +82,12 @@ const root = document.getElementById('root');
 
 function card(it) {
   return `<div class="card">
-    <div class="half top"><div>${innerFace(it)}</div></div>
-    <div class="half"><div>${innerFace(it)}</div></div>
+    <div class="half top">${face(it)}</div>
+    <div class="half">${face(it)}</div>
   </div>`;
 }
 function symSVG(t) {
-  const c = t === 'veg' ? '#1a7d2c' : '#9e1414';
+  const c = t === 'veg' ? '#1d5c3a' : '#9e1414';
   const inner = t === 'veg'
     ? `<circle cx="10" cy="10" r="4.6" fill="${c}"/>`
     : `<polygon points="10,4.6 15.4,14.6 4.6,14.6" fill="${c}"/>`;
@@ -89,13 +95,14 @@ function symSVG(t) {
     + `<rect x="1.4" y="1.4" width="17.2" height="17.2" fill="none" stroke="${c}" stroke-width="1.8"/>`
     + inner + `</svg>`;
 }
-function innerFace(it) {
+function face(it) {
   const label = it.t === 'veg' ? 'Vegetarian' : 'Non-Vegetarian';
-  return `${symSVG(it.t)}
-    <p class="symlabel">${label}</p>
+  return `<img class="fl tl" src="flowers-corner.png" alt="">
+    <img class="fl br" src="flowers-corner.png" alt="">
     <h2 class="name">${it.n}</h2>
     <div class="rule"></div>
-    <p class="desc">${it.d}</p>`;
+    <p class="desc">${it.d}</p>
+    <div class="veg">${symSVG(it.t)}<p class="symlabel">${label}</p></div>`;
 }
 
 const CUTLINES = `<svg class="cutlines" viewBox="0 0 210 297" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">`
