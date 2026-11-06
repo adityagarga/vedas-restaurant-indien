@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Vedas — Welcome Party Bar Specs (internal)</title>
+<!--
+  INTERNAL — bartender spec sheet for the Welcome Party classic cocktails (+ long drinks), A4 portrait.
+  Export:
+  "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless=new --no-pdf-header-footer \
+    --virtual-time-budget=15000 --print-to-pdf=Vedas-Welcome-Party-Bar-Specs-A4.pdf bar-cocktail-specs-a4.html
+-->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800;900&display=swap">
+<style>
+  @page { size: A4 portrait; margin: 0; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; font-family: Inter, "Helvetica Neue", Arial, sans-serif; color: #111; }
+  .sheet { width: 210mm; height: 297mm; padding: 9mm 10mm 8mm; display: flex; flex-direction: column; background: #fff; }
+
+  header { display: flex; align-items: baseline; justify-content: space-between; border-bottom: 1.2mm solid #111; padding-bottom: 2.5mm; }
+  header h1 { font-size: 24pt; font-weight: 900; letter-spacing: .5px; margin: 0; }
+  header p { font-size: 9pt; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; margin: 0; color: #9e1414; }
+
+  .drink { display: grid; grid-template-columns: 42mm 1fr 58mm; column-gap: 6mm; align-items: start;
+           padding: 4.2mm 0; border-bottom: .4mm solid #bbb; }
+  .drink h2 { font-size: 19pt; font-weight: 900; line-height: 1.05; margin: 0 0 2mm; text-transform: uppercase; }
+  .tag { display: block; font-size: 9pt; font-weight: 700; text-transform: uppercase; letter-spacing: .6px;
+         color: #444; line-height: 1.45; }
+
+  .ing { list-style: none; margin: 0; padding: 0; }
+  .ing li { display: grid; grid-template-columns: 28mm 1fr; align-items: baseline; font-size: 14.5pt;
+            font-weight: 700; line-height: 1.4; }
+  .ing b { font-size: 16pt; font-weight: 900; }
+  .ing .alt { grid-column: 2; font-size: 9pt; font-weight: 600; color: #555; line-height: 1.2; margin: -.6mm 0 .8mm; }
+
+  .method { margin: 0; padding-left: 5mm; font-size: 10.5pt; font-weight: 600; line-height: 1.38; }
+  .garnish { margin: 1.8mm 0 0; font-size: 10.5pt; font-weight: 800; }
+  .garnish span { font-weight: 600; }
+
+  .long { margin-top: 4mm; }
+  .long h3 { font-size: 12pt; font-weight: 900; text-transform: uppercase; letter-spacing: .6px; margin: 0 0 2mm; }
+  .long-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4mm; }
+  .long-grid div { border: .4mm solid #bbb; border-radius: 1.5mm; padding: 2.6mm 3mm; }
+  .long-grid strong { display: block; font-size: 12.5pt; font-weight: 900; text-transform: uppercase; margin-bottom: 1mm; }
+  .long-grid p { margin: 0; font-size: 10.5pt; font-weight: 700; line-height: 1.4; }
+  .long-grid p span { font-weight: 600; color: #444; }
+
+  footer { margin-top: auto; padding-top: 3mm; border-top: .4mm solid #111; display: flex; justify-content: space-between;
+           font-size: 8.5pt; font-weight: 700; text-transform: uppercase; letter-spacing: .6px; }
+
+  @media screen { body { background: #ddd; padding: 10px; } .sheet { margin: 0 auto; box-shadow: 0 4px 16px rgba(0,0,0,.2); } }
+</style>
+</head>
+<body>
+<div class="sheet" id="sheet"></div>
+<script>
+/* House specs — quantities in ml. Adjust here if the head bartender uses different builds. */
+const COCKTAILS = [
+  { n: "Negroni", tags: ["Rocks glass", "1 large ice cube"],
+    ing: [["30 ml", "Gin"], ["30 ml", "Campari"], ["30 ml", "Sweet vermouth"]],
+    method: ["Pour all into a mixing glass full of ice", "Stir 20–30 seconds", "Strain over a fresh large cube"],
+    garnish: "Orange peel — twist over the drink" },
+  { n: "Aperol Spritz", tags: ["Large wine glass", "Fill with ice"],
+    ing: [["90 ml", "Prosecco"], ["60 ml", "Aperol"], ["30 ml", "Perrier"]],
+    method: ["Fill the glass with ice", "Add Prosecco, then Aperol", "Top with Perrier, stir once gently"],
+    garnish: "Orange slice" },
+  { n: "Hugo Spritz", tags: ["Large wine glass", "Fill with ice"],
+    ing: [["20 ml", "Elderflower syrup", "or 30 ml elderflower liqueur"], ["100 ml", "Prosecco"],
+          ["30 ml", "Perrier"], ["8–10", "Mint leaves"]],
+    method: ["Clap the mint, drop it in with the elderflower", "Fill with ice", "Add Prosecco, top with Perrier, stir gently"],
+    garnish: "Mint sprig + lime wheel" },
+  { n: "Margarita", tags: ["Chilled coupe", "Half salt rim"],
+    ing: [["50 ml", "Tequila blanco"], ["25 ml", "Triple sec / Cointreau"], ["25 ml", "Jus de citron"]],
+    method: ["Salt half the rim of the glass", "Shake hard with ice 10–12 seconds", "Double-strain into the glass"],
+    garnish: "Lime wheel" },
+  { n: "Old Fashioned", tags: ["Rocks glass", "1 large ice cube"],
+    ing: [["60 ml", "Bourbon"], ["10 ml", "Sugar syrup (1:1)"], ["2 dashes", "Angostura bitters"]],
+    method: ["Pour all into a mixing glass full of ice", "Stir 30 seconds", "Strain over a fresh large cube"],
+    garnish: "Orange peel — express the oils; cherry optional" },
+];
+const LONG_DRINKS = [
+  { n: "Gin & Tonic", spec: "50 ml gin · 150 ml tonic", serve: "Highball, full ice · lime wedge" },
+  { n: "Whiskey Soda", spec: "50 ml whisky · 150 ml Perrier", serve: "Highball, full ice · lemon peel" },
+  { n: "Rum & Coke", spec: "50 ml rum · 150 ml cola", serve: "Highball, full ice · lime wedge" },
+];
+
+const drink = c => `<section class="drink">
+  <div><h2>${c.n}</h2>${c.tags.map(t => `<span class="tag">${t}</span>`).join("")}</div>
+  <ul class="ing">${c.ing.map(([q, what, alt]) =>
+    `<li><b>${q}</b><span>${what}</span>${alt ? `<span class="alt">${alt}</span>` : ""}</li>`).join("")}</ul>
+  <div><ol class="method">${c.method.map(m => `<li>${m}</li>`).join("")}</ol>
+    <p class="garnish">Garnish: <span>${c.garnish}</span></p></div>
+</section>`;
+
+document.getElementById("sheet").innerHTML = `
+  <header><h1>CLASSIC COCKTAILS</h1><p>Bar spec · Internal · Welcome Party</p></header>
+  ${COCKTAILS.map(drink).join("")}
+  <div class="long"><h3>Long drinks</h3><div class="long-grid">${LONG_DRINKS.map(d =>
+    `<div><strong>${d.n}</strong><p>${d.spec}<br><span>${d.serve}</span></p></div>`).join("")}</div></div>
+  <footer><span>All measures in ml</span><span>Fresh lime & lemon only — never bottled</span><span>Taste before serving</span></footer>`;
+</script>
+</body>
+</html>

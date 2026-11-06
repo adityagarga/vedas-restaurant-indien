@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Vedas — Welcome Party Tent Cards (1/4 A4)</title>
+<!--
+  1/4 A4 tents: 105 x 148.5mm sheet, folds to 105 x 74mm faces — 4 per A4 portrait.
+  Items live in menu-data.js; design shared with the lunch tents (../shared/tent-cards.css, ../shared/tent-cards.js). Export:
+  "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless=new --no-pdf-header-footer \
+    --virtual-time-budget=15000 --print-to-pdf=Vedas-Welcome-Party-Tents-Quarter-A4.pdf tents-quarter-a4.html
+-->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<link rel="stylesheet" href="../shared/tent-cards.css">
+<style>@page { size: A4 portrait; margin: 0; }</style>
+</head>
+<body class="quarter">
+<div id="root"></div>
+<script src="menu-data.js"></script>
+<script src="../shared/tent-cards.js"></script>
+<script>renderTents("quarter", WP_TENT_ITEMS);</script>
+</body>
+</html>
