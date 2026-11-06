@@ -14,4 +14,12 @@ const DIWALI_ITEMS = [
     d:"Milk dumplings soaked in rose & cardamom syrup" },
   { n:"Kesar Elaichi Peda", t:"veg",
     d:"Soft milk fudge flavoured with saffron & cardamom" },
+
+  /* ---- Extra cards (fill the second sheet) ---- */
+  { n:"Aloo Tikki", t:"veg",
+    d:"Crisp golden potato patties with herbs & warm spices" },
+  { n:"Balushahi", t:"veg",
+    d:"Flaky pastry fried in ghee & glazed with sugar syrup" },
+  { n:"Gulab Jamun", t:"veg",
+    d:"Milk dumplings soaked in rose & cardamom syrup" },
 ];
